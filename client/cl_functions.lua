@@ -41,15 +41,20 @@ function StartStaminaThread()
     end)
 end
 
+local drop = 0.05
 function AttachToUte()
     if IsPedOnVehicle(cache.ped) then
         local vehicle = lib.getClosestVehicle(GetEntityCoords(cache.ped), 3.0, true)
         if Config.Utes[string.lower(GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)))] and Config.SitInUte then
             local coords = GetEntityCoords(cache.ped)
-            local rot = GetEntityRotation(cache.ped, 2)
+            local rot = GetEntityRotation(vehicle, 2)
             local offset = GetOffsetFromEntityGivenWorldCoords(vehicle, coords.x, coords.y, coords.z)
+            local dogRot = GetEntityRotation(cache.ped, 2)
+            drop = 0.05
 
-            AttachEntityToEntity(cache.ped, vehicle, GetPedBoneIndex(cache.ped, 0x0), offset.x, offset.y, offset.z - 0.05, rot.x, rot.y, rot.z - 75.0, false, false, true, true, 2, true)
+            AttachEntityToEntity(cache.ped, vehicle, GetPedBoneIndex(cache.ped, 0x0), offset.x, offset.y, offset.z - drop, dogRot.x, dogRot.y, dogRot.z - rot.z, false, false, true, true, 2, true)
+
+            
 
             local custom = lib.callback.await("fn-k9utils:fetchSettings", false, "carEmote")
             if custom == nil then custom = "" end
@@ -61,15 +66,34 @@ function AttachToUte()
                 Wait(10)
             end
             exports["rpemotes-reborn"]:EmoteCommandStart("bdogsit", 0)
-            print(IsEntityAttached(cache.ped))
+
+            while not IsEntityAttached(cache.ped) do
+                drop = drop + 0.05
+                AttachEntityToEntity(cache.ped, vehicle, GetPedBoneIndex(cache.ped, 0x0), offset.x, offset.y, offset.z - drop, dogRot.x, dogRot.y, dogRot.z - rot.z, false, false, true, true, 2, true)
+                if drop > 1.0 then 
+                    lib.notify({
+                        title = "Failed To Attach",
+                        description = "Try moving to another spot and try again",
+                        type = "error"
+                    }) 
+                    return false 
+                end
+            end
         end
     end
 end
 
 function DetatchFromUte()
-    DetachEntity(cache.ped, true, true)
+    DetachEntity(cache.ped, false, true)
+    local vehicle = lib.getClosestVehicle(GetEntityCoords(cache.ped), 3.0, true)
     local coords = GetEntityCoords(cache.ped)
---    TaskPedSlideToCoord(cache.ped, coords.x, coords.y, coords.z + 0.3, GetEntityRotation(cache.ped, 2).z, 250)
+    local rot = GetEntityRotation(vehicle, 2)
+    local offset = GetOffsetFromEntityGivenWorldCoords(vehicle, coords.x, coords.y, coords.z)
+    local heading = GetEntityHeading(cache.ped)
+
+    AttachEntityToEntity(cache.ped, vehicle, GetPedBoneIndex(cache.ped, 0x0), offset.x, offset.y, offset.z + 0.1 + drop, rot.x, rot.y, heading - rot.z, false, false, true, true, 2, true)
+    Wait(10)
+    DetachEntity(cache.ped, true, true)
     Wait(250)
     exports["rpemotes-reborn"]:EmoteCancel(false)
 end
