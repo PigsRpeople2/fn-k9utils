@@ -1,34 +1,35 @@
 Config = {}
 
-Config.whitelistedModels = {
+Config.WhitelistedModels = {
     "k9_female",
-    "k9_male"
+    "k9_male",
+    "mp_f_freemode_01"
 }
 
-Config.whitelistedGroups = {
+Config.WhitelistedGroups = {
     "k9"
 }
 
 
 
 
-Config.dogStamina = 250.0
-Config.quickerStaminaRegen = true
-Config.dogStaminaRegen = 0.01
-Config.criticalRegen = true
+Config.DogStamina = 250.0
+Config.QuickerStaminaRegen = true
+Config.DogStaminaRegen = 0.01
+Config.CriticalRegen = true
 
-Config.sprintInside = true
+Config.SprintInside = true
 
-Config.notWimpy = true
+Config.NotWimpy = true
 
-Config.canFall = true
+Config.CanFall = true
 
-Config.surviveWater = true
-Config.swim = true
+Config.SurviveWater = true
+Config.Swim = true
 
-Config.autoCarEmote = true
-Config.carEmoteCustomisation = true
-Config.carEmoteCustomisationOptions = {
+Config.AutoCarEmote = true
+Config.CarEmoteCustomisation = true
+Config.CarEmoteCustomisationOptions = {
     { emote = "", label = "Clear" },
     { emote = "bdogglowa", label = "Glow Stick" },
     { emote = "bdogfris", label = "Frisbee" },
@@ -45,4 +46,16 @@ Config.carEmoteCustomisationOptions = {
 
 }
 
-Config.dogPreferBackSeat = true
+Config.DogPreferBackSeat = true
+
+
+Config.Leash = true
+Config.LeashMinDistance = 2.0
+Config.LeashMaxDistance = 10.0
+Config.LeashDefaultDistance = 5.0
+Config.LeashBreakOver = 3.0
+Config.LeashItem = "money"
+Config.LeashInteractDistance = 2.0
+
+
+Config.SitInUte = true

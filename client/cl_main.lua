@@ -6,29 +6,31 @@
             StartStaminaThread()
         end
 
-        if GetPlayerMaxStamina(cache.playerId) ~= Config.dogStamina then
-            local setmax = SetPlayerMaxStamina(cache.playerId, Config.dogStamina)
-            SetPlayerStamina(cache.playerId, Config.dogStamina)
+        if GetPlayerMaxStamina(cache.playerId) ~= Config.DogStamina then
+            SetPlayerMaxStamina(cache.playerId, Config.DogStamina)
+            SetPlayerStamina(cache.playerId, Config.DogStamina)
         end
 
-        if Config.sprintInside then
+        if Config.SprintInside then
             SetPedFlag(cache.ped, 427, true)
         end
-        if Config.notWimpy then
+        if Config.NotWimpy then
             SetPedFlag(cache.ped, 160, true)
         end
-        if Config.surviveWater then
+        if Config.SurviveWater then
             SetPedFlag(cache.ped, 3, false)
         end
-        if Config.swim then
+        if Config.Swim then
             SetPedFlag(cache.ped, 163, true)
             SetPedFlag(cache.ped, 164, true)
+            StartFallFixThread()
         end
-        if Config.canFall and not Config.swim then
+        if Config.CanFall and not Config.Swim then
             SetPedFlag(cache.ped, 164, true)
+            StartFallFixThread()
         end
 
-        if Config.autoCarEmote then
+        if Config.AutoCarEmote then
             lib.onCache("seat", function (value, oldValue)
 
                 Wait(10)
@@ -52,7 +54,16 @@
         end, false)
 
 
-        if Config.dogPreferBackSeat then
+        RegisterCommand("attach", function()
+            AttachToUte()
+        end, false)
+
+        RegisterCommand("detach", function()
+            DetatchFromUte()
+        end, false)
+
+
+        if Config.DogPreferBackSeat then
             lib.onCache("vehicle", function (value, oldValue)
                 if value then
                    print(value) 

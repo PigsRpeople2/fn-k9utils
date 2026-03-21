@@ -1,7 +1,7 @@
 RegisterNetEvent("fn-k9utils:openDogCustomMenu", function()
     local options = {}
 
-    for _, item in ipairs(Config.carEmoteCustomisationOptions) do
+    for _, item in ipairs(Config.CarEmoteCustomisationOptions) do
         table.insert(options, {
             label = item.label,
             args = { emote = item.emote }
