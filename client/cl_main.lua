@@ -63,12 +63,36 @@
         end, false)
 
 
+        local climbTarget = exports.ox_target:addGlobalVehicle({
+            label = 'Climb Into Back',
+            icon = 'fa-solid fa-car',
+            canInteract = function (entity, distance, coords, name, bone)
+                return CheckDog() and IsPedOnFoot(cache.ped) and not IsPedHuman(cache.ped) and distance <= 5.0 and GetEntityBoneIndexByName(entity, "boot") ~= -1
+            end,
+            onSelect = function(data)
+                ClimbIntoBack(data)
+            end
+        })
+
+        
+        AddEventHandler('onResourceStop', function (resourceName)
+            if resourceName == GetCurrentResourceName() then
+                exports.ox_target:removeGlobalVehicle(climbTarget)
+            end
+        end)
+
+
+
+
+
+
         if Config.DogPreferBackSeat then
-            lib.onCache("vehicle", function (value, oldValue)
-                if value then
-                   print(value) 
-                end
-            end)
+            StartBackseat()
         end
+
+        RegisterCommand("clear", function ()
+            ClearPedTasks(cache.ped)
+            ClearPedSecondaryTask(cache.ped)
+        end, false)
     end
 --end)

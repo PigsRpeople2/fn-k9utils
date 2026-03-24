@@ -3,7 +3,6 @@ Config = {}
 Config.WhitelistedModels = {
     "k9_female",
     "k9_male",
-    "mp_f_freemode_01"
 }
 
 Config.WhitelistedGroups = {
@@ -47,6 +46,7 @@ Config.CarEmoteCustomisationOptions = {
 }
 
 Config.DogPreferBackSeat = true
+Config.DogAllowedPreferedSeats = {2, 3, 4, 5, 6, 7}
 
 
 Config.Leash = true
@@ -59,3 +59,4 @@ Config.LeashInteractDistance = 2.0
 
 
 Config.SitInUte = true
+Config.ClimbIntoUte = true

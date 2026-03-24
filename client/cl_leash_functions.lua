@@ -1,5 +1,4 @@
 function CreateLeash(dog)
-    print(dog, cache.ped)
     local dogId = NetworkGetNetworkIdFromEntity(dog)
     local playerId = NetworkGetNetworkIdFromEntity(cache.ped)
     TriggerServerEvent("fn-k9utils:sv:syncLeash", playerId, dogId)
@@ -9,7 +8,6 @@ Leashes = {}
 RegisterNetEvent("fn-k9utils:cl:syncLeash", function (playerId, dogId)
     local playerPed = NetworkGetEntityFromNetworkId(playerId)
     local dog = NetworkGetEntityFromNetworkId(dogId)
-    print(playerPed, dog)
     local dogCoords = GetEntityCoords(dog)
     local playerCoords = GetEntityCoords(playerPed)
     RopeLoadTextures()
